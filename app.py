@@ -2,16 +2,19 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import firebase_admin
 from firebase_admin import credentials, firestore
 from datetime import datetime
-
+import os
+import json
 # --- Flask setup ---
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
 
 # --- Firebase setup ---
-cred = credentials.Certificate("smart-parking.json")
+cred_json = os.environ.get("FIREBASE_CREDENTIALS")
+cred_dict = json.loads(cred_json)
+cred = credentials.Certificate(cred_dict)
+
 firebase_admin.initialize_app(cred)
 db = firestore.client()
-
 # --- Admin credentials ---
 ADMIN_USERNAME = "admin"
 ADMIN_PASSWORD = "123456"

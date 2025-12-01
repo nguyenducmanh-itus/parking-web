@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard Xe</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+        img { max-width: 120px; }
+        form div { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Dashboard Xe</h1>
+
+    <form method="POST">
+        <div>
+            Biển số: <input type="text" name="license_plate">
+        </div>
+        <div>
+            Loại xe:
+            <select name="type">
+                <option value="all">Tất cả</option>
+                <option value="in">In</option>
+                <option value="out">Out</option>
+            </select>
+        </div>
+        <div>
+            Cảnh báo:
+            <select name="caution">
+                <option value="all">Tất cả</option>
+                <option value="pass">Thành công</option>
+                <option value="fail">Thất bại</option>
+            </select>
+        </div>
+        <div>
+            Từ thời gian: <input type="datetime-local" name="start_time">
+        </div>
+        <div>
+            Đến thời gian: <input type="datetime-local" name="end_time">
+        </div>
+        <button type="submit">Tìm kiếm</button>
+    </form>
+
+    <hr>
+
+    <table>
+        <tr>
+            <th>Biển số</th>
+            <th>Loại</th>
+            <th>Cảnh báo</th>
+            <th>Thời gian</th>
+            <th>Tên</th>
+            <th>Ảnh mặt</th>
+            <th>Ảnh biển</th>
+        </tr>
+        {% for log in logs %}
+        <tr>
+            <td>{{ log.license_plate }}</td>
+            <td>{{ log.type }}</td>
+            <td>{{ log.caution }}</td>
+            <td>{{ log.time }}</td>
+            <td>{{ log.name }}</td>
+            <td>
+                {% if log.image_face %}
+                <img src="{{ log.image_face }}">
+                {% endif %}
+            </td>
+            <td>
+                {% if log.image_plate %}
+                <img src="{{ log.image_plate }}">
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p><a href="{{ url_for('logout') }}">Đăng xuất</a></p>
+</body>
+</html>

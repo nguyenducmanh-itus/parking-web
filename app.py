@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.secret_key = "supersecretkey"
 
 # --- Firebase setup ---
-cred = credentials.Certificate("C:/AIoT/Server/Firebase/smart-parking.json")
+cred = credentials.Certificate("smart-parking.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
